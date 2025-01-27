@@ -26,3 +26,13 @@ iverilog -o simulation testbench.v alu.v exe.v myreg.v
 vvp simulation
 
 gtkwave dump.vcd
+
+
+SCK1
+
+iverilog -o symulacja testbench.v proj.v
+
+vvp symulacja
+
+gtkwave proj1.vcd
+
