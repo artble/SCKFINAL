@@ -1,4 +1,4 @@
-module SCK_PROJ_1 (i_arg0, i_arg1, i_oper, o_result, o_flag);
+module proj1 (i_arg0, i_arg1, i_oper, o_result, o_flag);
 
     parameter [2:0] ADD = 0;
     parameter [2:0] SUB = 1;
