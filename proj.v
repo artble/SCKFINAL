@@ -1,15 +1,14 @@
-
-module proj1 (i_arg0, i_arg1, i_oper, o_result, o_flag);
+module SCK_PROJ_1 (i_arg0, i_arg1, i_oper, o_result, o_flag);
 
     parameter [2:0] ADD = 0;
     parameter [2:0] SUB = 1;
-    parameter [2:0] MAX = 2;
-    parameter [2:0] MIN = 3;
+    parameter [2:0] SHL = 2; // Przesunięcie w lewo zamiast MAX
+    parameter [2:0] SHR = 3; // Przesunięcie w prawo zamiast MIN
     parameter [2:0] AND = 4;
     parameter [2:0] ORR = 5;
     parameter [2:0] XOR = 6;
     parameter [2:0] XNOR = 7;
- 
+
     input wire signed [9:0] i_arg0;
     input wire signed [9:0] i_arg1;
     input wire [2:0] i_oper;
@@ -22,8 +21,8 @@ always @(i_arg0 or i_arg1 or i_oper) begin
     case (i_oper)
         ADD: o_result = i_arg0 + i_arg1;
         SUB: o_result = i_arg0 - i_arg1;
-        MAX: o_result = i_arg0 >= i_arg1 ? i_arg0 : i_arg1;
-        MIN: o_result = i_arg0 <= i_arg1 ? i_arg0 : i_arg1;
+        SHL: o_result = (i_arg1 > 0) ? (i_arg0 << i_arg1) : i_arg0; // Przesunięcie w lewo
+        SHR: o_result = (i_arg1 > 0) ? (i_arg0 >> i_arg1) : i_arg0; // Przesunięcie w prawo
         AND: o_result = i_arg0 & i_arg1;
         ORR: o_result = i_arg0 | i_arg1;
         XOR: o_result = i_arg0 ^ i_arg1;
@@ -35,9 +34,9 @@ always @(i_arg0 or i_arg1 or i_oper) begin
     ZERO = o_result == 0;
 
     case (i_oper)
-        ADD: OVF = ((i_arg0 > 0) & (i_arg1 > 0) & (NEG == 1))
+        ADD: OVF = ((i_arg0 > 0) & (i_arg1 > 0) & (NEG == 1)) 
                  | ((i_arg0 < 0) & (i_arg1 < 0) & (POS == 1));
-        SUB: OVF = ((i_arg0 > 0) & (i_arg1 < 0) & (NEG == 1))
+        SUB: OVF = ((i_arg0 > 0) & (i_arg1 < 0) & (NEG == 1)) 
                  | ((i_arg0 < 0) & (i_arg1 > 0) & (POS == 1));
         default: OVF = 0; 
     endcase
