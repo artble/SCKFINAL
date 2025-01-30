@@ -2,12 +2,11 @@ module testbench;
 
     parameter [2:0] ADD = 0;
     parameter [2:0] SUB = 1;
-    parameter [2:0] MAX = 2;
-    parameter [2:0] MIN = 3;
-    parameter [2:0] AND = 4;
-    parameter [2:0] ORR = 5;
-    parameter [2:0] XOR = 6;
-    parameter [2:0] XNOR = 7;
+    parameter [2:0] SHIFT = 2;
+    parameter [2:0] AND = 3;
+    parameter [2:0] ORR = 4;
+    parameter [2:0] XOR = 5;
+    parameter [2:0] XNOR = 6;
 
     reg [2:0] i_oper;
     reg [3:0] i_reg0;
