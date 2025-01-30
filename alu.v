@@ -4,12 +4,11 @@ module alu (i_data, i_arg0, i_arg1,
 
     parameter [2:0] ADD = 0;
     parameter [2:0] SUB = 1;
-    parameter [2:0] MAX = 2;
-    parameter [2:0] MIN = 3;
-    parameter [2:0] AND = 4;
-    parameter [2:0] ORR = 5;
-    parameter [2:0] XOR = 6;
-    parameter [2:0] XNOR = 7;
+    parameter [2:0] SHIFT = 2;
+    parameter [2:0] AND = 3;
+    parameter [2:0] ORR = 4;
+    parameter [2:0] XOR = 5;
+    parameter [2:0] XNOR = 6;
  
     input wire signed [9:0] i_data;
     input wire signed [9:0] i_arg0;
@@ -28,8 +27,13 @@ module alu (i_data, i_arg0, i_arg1,
         case (i_oper)
             ADD: o_result = i_arg0_inside + i_arg1;
             SUB: o_result = i_arg0_inside - i_arg1;
-            MAX: o_result = i_arg0_inside >= i_arg1 ? i_arg0_inside : i_arg1;
-            MIN: o_result = i_arg0_inside <= i_arg1 ? i_arg0_inside : i_arg1;
+            SHIFT: begin
+                if (i_arg1 > 0)  // Przesunięcie w lewo (jeśli B > 0)
+                    o_result = i_arg0_inside << i_arg1;
+                else if (i_arg1 < 0) // Przesunięcie w prawo (jeśli B < 0)
+                    o_result = i_arg0_inside >> -i_arg1; // Przemiana na dodatnią liczbę
+                else  // Jeśli B == 0, brak przesunięcia
+                    o_result = i_arg0_inside;
             AND: o_result = i_arg0_inside & i_arg1;
             ORR: o_result = i_arg0_inside | i_arg1;
             XOR: o_result = i_arg0_inside ^ i_arg1;
