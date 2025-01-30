@@ -2,12 +2,11 @@ module SCK_PROJ_1 (i_arg0, i_arg1, i_oper, o_result, o_flag);
 
     parameter [2:0] ADD = 0;
     parameter [2:0] SUB = 1;
-    parameter [2:0] SHL = 2; // Przesunięcie w lewo zamiast MAX
-    parameter [2:0] SHR = 3; // Przesunięcie w prawo zamiast MIN
-    parameter [2:0] AND = 4;
-    parameter [2:0] ORR = 5;
-    parameter [2:0] XOR = 6;
-    parameter [2:0] XNOR = 7;
+    parameter [2:0] SHIFT = 2;
+    parameter [2:0] AND = 3;
+    parameter [2:0] ORR = 4;
+    parameter [2:0] XOR = 5;
+    parameter [2:0] XNOR = 6;
 
     input wire signed [9:0] i_arg0;
     input wire signed [9:0] i_arg1;
@@ -21,8 +20,13 @@ always @(i_arg0 or i_arg1 or i_oper) begin
     case (i_oper)
         ADD: o_result = i_arg0 + i_arg1;
         SUB: o_result = i_arg0 - i_arg1;
-        SHL: o_result = (i_arg1 > 0) ? (i_arg0 << i_arg1) : i_arg0; // Przesunięcie w lewo
-        SHR: o_result = (i_arg1 > 0) ? (i_arg0 >> i_arg1) : i_arg0; // Przesunięcie w prawo
+        SHIFT: begin
+                if (i_arg1 > 0)
+                    o_result = i_arg0 << i_arg1; // Shift left if B > 0
+                else if (i_arg1 < 0)
+                    o_result = i_arg0 >> -i_arg1; // Shift right if B < 0
+                else
+                    o_result = i_arg0; // No shift if B == 0
         AND: o_result = i_arg0 & i_arg1;
         ORR: o_result = i_arg0 | i_arg1;
         XOR: o_result = i_arg0 ^ i_arg1;
