@@ -2,12 +2,11 @@ module testbench;
 
     parameter [2:0] ADD = 0;
     parameter [2:0] SUB = 1;
-    parameter [2:0] SHL = 2; // Przesunięcie w lewo zamiast MAX
-    parameter [2:0] SHR = 3; // Przesunięcie w prawo zamiast MIN
-    parameter [2:0] AND = 4;
-    parameter [2:0] ORR = 5;
-    parameter [2:0] XOR = 6;
-    parameter [2:0] XNOR = 7;
+     parameter [2:0] SHIFT = 2;
+    parameter [2:0] AND = 3;
+    parameter [2:0] ORR = 4;
+    parameter [2:0] XOR = 5;
+    parameter [2:0] XNOR = 6;
 
     reg signed [9:0] a;
     reg signed [9:0] b;
@@ -38,16 +37,23 @@ module testbench;
 
         #1;
         
+        // Test operacji SHIFT (przesunięcie w lewo)
         a = 10'b0001000000;
-        b = 10'b0000010000;
-        oper = MAX;
-
+        b = 4; // Przesunięcie w lewo o 4 bity
+        oper = SHIFT;
         #1;
 
+        // Test operacji SHIFT (przesunięcie w prawo)
         a = 10'b0001000000;
-        b = 10'b0000010000;
-        oper = MIN;
+        b = -4; // Przesunięcie w prawo o 4 bity
+        oper = SHIFT;
+        #1;
 
+        // Test operacji SHIFT (brak przesunięcia)
+        a = 10'b0001000000;
+        b = 0; // Brak przesunięcia
+        oper = SHIFT;
+        #1;
         #1;
 
         a = 10'b0001000000;
