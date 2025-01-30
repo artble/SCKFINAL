@@ -2,8 +2,8 @@ module testbench;
 
     parameter [2:0] ADD = 0;
     parameter [2:0] SUB = 1;
-    parameter [2:0] MAX = 2;
-    parameter [2:0] MIN = 3;
+    parameter [2:0] SHL = 2; // Przesunięcie w lewo zamiast MAX
+    parameter [2:0] SHR = 3; // Przesunięcie w prawo zamiast MIN
     parameter [2:0] AND = 4;
     parameter [2:0] ORR = 5;
     parameter [2:0] XOR = 6;
